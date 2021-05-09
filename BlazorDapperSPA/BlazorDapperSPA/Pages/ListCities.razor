@@ -1,0 +1,123 @@
+﻿@using BlazorDapperSPA.Data
+
+@page "/listcities"
+@inject ICityService CityService
+@inject NavigationManager NavigationManager
+
+<h2>City Details</h2>
+<p>
+    <a href="/addcity">Create New City</a>
+</p>
+
+@if (cities == null)
+{
+    <img src="./basicloader.gif" />
+}
+else
+{
+    <input @bind-value="SearchTerm" onkeydown="search"  />
+    <button class="btn btn-dark" type="button" @onclick="EnableEditing">Edit</button>
+    <table class='table'>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>State</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var city in cities)
+            {
+                if (editing == true)
+                {
+                    <tr>
+
+                        <td><input for="Name" class="form-control" @bind="@city.Name" /> </td>
+                        <td><input for="State" class="form-control" @bind="@city.State" /></td>
+                        <td> <button class="btn btn-block" @onclick=" () => update(city.Id, city.Name, city.State)"> Update </button>  </td>
+                        <td><a href='/deletecity/@city.Id'>Delete</a></td>
+                    </tr>
+                }
+                else if (editing == false)
+                {
+                    <tr>
+
+                        <td>@city.Name </td>
+                        <td>@city.State </td>
+
+
+                    </tr>
+                }
+
+
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    IEnumerable<City> cities;
+    public bool editing;
+    public int id { get; set; }
+    City city = new City();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        editing = false;
+        cities = await CityService.GetCities();
+    }
+    public async void getCityAll()
+    {
+        cities = await CityService.GetCities();
+    }
+
+    public void EnableEditing()
+    {
+        if (editing == true)
+        {
+            editing = false;
+        }
+        else
+        {
+            editing = true;
+        }
+
+
+    }
+    public void DisableEditing()
+    {
+        editing = false;
+    }
+
+    public async void update(int cityId, string name, string state)
+    {
+        city.Name = name;
+        city.State = state;
+        id = cityId;
+        await UpdateCity();
+    }
+
+    protected async Task UpdateCity()
+    {
+        await CityService.EditCity(id, city);
+        editing = false;
+        getCityAll();
+
+    }
+
+    // Initialize SearchTerm to "" to prevent null's
+    string SearchTerm { get; set; } = "";
+
+    public void search()
+    {
+        if (string.IsNullOrWhiteSpace(SearchTerm))
+        {
+            getCityAll();
+        }
+        else
+        {
+            cities = CityService.GetCitybySearch(SearchTerm);
+        }
+
+    }
+}

@@ -1,0 +1,7 @@
+﻿<StaticWebAssets Version="1.0">
+  <ContentRoot BasePath="_content/C1.Blazor.Core" Path="C:\Users\Nicol\.nuget\packages\c1.blazor.core\3.1.20211.65\build\..\staticwebassets\" />
+  <ContentRoot BasePath="_content/C1.Blazor.Grid" Path="C:\Users\Nicol\.nuget\packages\c1.blazor.grid\3.1.20211.65\build\..\staticwebassets\" />
+  <ContentRoot BasePath="_content/C1.Blazor.Input" Path="C:\Users\Nicol\.nuget\packages\c1.blazor.input\3.1.20211.65\build\..\staticwebassets\" />
+  <ContentRoot BasePath="_content/C1.Blazor.ListView" Path="C:\Users\Nicol\.nuget\packages\c1.blazor.listview\3.1.20211.65\build\..\staticwebassets\" />
+  <ContentRoot BasePath="_content/MudBlazor" Path="C:\Users\Nicol\.nuget\packages\mudblazor\5.0.8\build\..\staticwebassets\" />
+</StaticWebAssets>
